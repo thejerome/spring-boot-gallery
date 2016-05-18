@@ -9,7 +9,7 @@
               ">
 
        <bean class="java.lang.String" id="root">
-              <constructor-arg value="fallout"/>
+              <constructor-arg value="pictures_LQ"/>
        </bean>
 
        <util:list id="imgExtensions" value-type="java.lang.String">
