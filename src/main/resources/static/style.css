@@ -1,0 +1,54 @@
+img.mini {
+    height : 200px;
+    margin: 2px;
+    border-radius: 1em;
+}
+
+body {
+    background: #f8f8ff;
+    font-family: "Helvetica Neue", sans-serif;
+    font-size: x-large;
+    color: #a9a9a9;
+}
+
+div#header{
+    font-size: xx-large;
+    text-align: center;
+    background: #444444;
+    padding: 10px;
+    border-radius: 1em;
+    margin: 10px;
+}
+
+div#dirs, div#images{
+    display: inline-block;
+}
+
+div#dirs{
+    width: 20%;
+    vertical-align: top;
+    padding-top: 10px;
+
+}
+
+div#dirs div{
+    border: solid 2px #cccccc;
+    border-radius: 0.5em;
+    margin-bottom: 2px;
+    padding: 2px 10px;
+    cursor: pointer;
+}
+
+
+div#dirs div:hover{
+    border: solid 2px #a0a0a0;
+    background-color: #e8e8e8;
+}
+
+div#images{
+    width: 79%;
+    max-width: 79%;
+    padding-left: 10px;
+    border-left: solid 2px #444444;
+
+}
