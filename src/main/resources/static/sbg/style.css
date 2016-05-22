@@ -1,8 +1,9 @@
-img.mini {
-    height : 200px;
-    margin: 2px;
-    border-radius: 1em;
+* {
+    box-sizing: border-box;
 }
+
+/* force scrollbar */
+html { overflow-y: scroll; }
 
 body {
     background: #f8f8ff;
@@ -10,6 +11,36 @@ body {
     font-size: x-large;
     color: #a9a9a9;
 }
+
+img.mini {
+    box-sizing: border-box;
+    padding: 2px;
+    border-radius: 5px;
+}
+
+/*Image shadow */
+.grid-item{
+    position: relative;
+    overflow: hidden;
+}
+
+.grid-item:hover:after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    content: "";
+    border-radius: 5px;
+    box-shadow: 0 0 30px 30px rgba(152, 134, 86, 0.5) inset;
+}
+
+/*image card*/
+.grid-item{
+    padding: 5px;
+    border-radius: 5px;
+}
+
 
 div#header{
     font-size: xx-large;
@@ -37,6 +68,7 @@ div#dirs div{
     margin-bottom: 2px;
     padding: 2px 10px;
     cursor: pointer;
+    word-break: break-all;
 }
 
 
@@ -46,8 +78,7 @@ div#dirs div:hover{
 }
 
 div#images{
-    width: 79%;
-    max-width: 79%;
+    width: 77%;
     padding-left: 10px;
     border-left: solid 2px #444444;
 

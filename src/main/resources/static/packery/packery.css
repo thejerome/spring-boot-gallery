@@ -1,0 +1,28 @@
+/* ---- grid ---- */
+
+.grid {
+
+}
+
+/* clear fix */
+.grid:after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+/* ---- .grid-item ---- */
+
+.grid-item {
+    box-sizing: border-box;
+    float: left;
+    width: 33.333%;
+}
+
+.grid-item img{
+    display: block;
+    max-width: 100%;
+}
+
+
+.grid-item--width2 { width: 66.666%; }
