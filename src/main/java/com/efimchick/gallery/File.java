@@ -11,4 +11,5 @@ public interface File {
     String getFullName();
 
     Path getPath();
+
 }

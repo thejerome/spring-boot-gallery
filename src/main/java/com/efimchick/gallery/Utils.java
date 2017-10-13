@@ -8,6 +8,8 @@ import javax.imageio.stream.FileImageInputStream;
 import javax.imageio.stream.ImageInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Iterator;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -48,7 +50,16 @@ public class Utils {
         throw new IOException("Not a known image file: " + imgFile.getAbsolutePath());
     }
 
-    public static <T> Stream<T> streamOfOptional(Optional<T> opt){
+
+    public static boolean isImageByExtension(Path p) {
+        try {
+            return Files.probeContentType(p).contains("image");
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public static <T> Stream<T> streamOfOptional(Optional<T> opt) {
         return opt.isPresent() ? Stream.of(opt.get()) : Stream.empty();
     }
 }

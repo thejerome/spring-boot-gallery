@@ -1,11 +1,9 @@
 package com.efimchick.gallery;
 
-import java.nio.file.Path;
-
 /**
  * Created by Evgenii_Efimchik on 09-Oct-17.
  */
-public interface Image extends File {
+public interface Image extends File{
 
     long getSize();
 

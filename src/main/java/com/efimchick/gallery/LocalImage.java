@@ -1,6 +1,7 @@
 package com.efimchick.gallery;
 
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -12,62 +13,39 @@ import java.util.Optional;
  */
 
 @EqualsAndHashCode(of = {"path"})
+@Getter
 public class LocalImage implements Image {
 
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LocalImage.class);
+
     private final Path path;
-    private final String fileName;
+    private final String name;
     private final long size;
-    private final Dimension dimension;
     private final String extension;
+    private final String id;
+    private final int width;
+    private final int height;
+    private final String fullName;
 
     public LocalImage(Path path) throws IOException {
         this.path = path;
-        fileName = path.getFileName().toString();
+
+        name = path.getFileName().toString();
+        fullName = path.getFileName().toString();
         size = Files.size(path);
-        dimension = Utils.getImageDimension(path.toFile());
-        extension = com.google.common.io.Files.getFileExtension(fileName);
-    }
+        id = path.toString();
+        extension = com.google.common.io.Files.getFileExtension(name);
 
-    @Override
-    public String getName() {
-        return fileName;
-    }
-
-    @Override
-    public String getFullName() {
-        return fileName;
-    }
-
-    @Override
-    public Path getPath() {
-        return path;
-    }
-
-    @Override
-    public long getSize() {
-        return size;
-    }
-
-    @Override
-    public int getWidth() {
-        return dimension.width;
-    }
-
-    @Override
-    public int getHeight() {
-        return dimension.height;
-    }
-
-    @Override
-    public String getExtension() {
-        return extension;
+        Dimension dimension = Utils.getImageDimension(path.toFile());
+        width = dimension.width;
+        height = dimension.height;
     }
 
     public static Optional<LocalImage> of(Path p) {
         try {
             return Optional.of(new LocalImage(p));
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
             return Optional.empty();
         }
     }
