@@ -3,36 +3,28 @@ package com.efimchick;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ImportResource;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Scope;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
-import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
-import java.util.Objects;
 
 import static java.nio.file.Files.exists;
 import static java.nio.file.Files.isDirectory;
 
 @SpringBootApplication
 @RestController
-@ImportResource("file:config/settings.xml")
-@PropertySource("file:config/application.properties")
+@ComponentScan(basePackages = "com.efimchick.gallery.controller")
 public class SpringBootGalleryApplication {
 
-	@Autowired(required = true)
+	@Autowired(required = false)
 	String root;
 
 	private static ConfigurableApplicationContext applicationContext;
