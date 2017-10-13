@@ -111,5 +111,10 @@ public class ImageTests {
         public String getExtension() {
             return "fake";
         }
+
+        @Override
+        public String getId() {
+            return name;
+        }
     }
 }

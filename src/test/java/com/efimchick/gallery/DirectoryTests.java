@@ -8,10 +8,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 /**
@@ -70,13 +69,32 @@ public class DirectoryTests {
                 .collect(toList());
 
         assertEquals(actualImages, localDir.getImages());
+    }
 
-        System.out.println(localDir.getName());
-        System.out.println(localDir.getPath());
-        System.out.println(localDir.getImages());
-        System.out.println(localDir.getSubDirs());
+    @Test
+    public void localDirMayHaveSubDirs() throws IOException {
+        LocalDirectory localDir = new LocalDirectory(Paths.get("pictures_HQ"));
 
+        List<Directory> expected = Files.list(Paths.get("pictures_HQ"))
+                .filter(Files::isDirectory)
+                .map(LocalDirectory::new)
+                .collect(toList());
 
+        assertEquals(expected, localDir.getSubDirs());
+    }
+
+    @Test
+    public void localDirMayNotContainAnyFilesAsImagesExceptImages() throws IOException {
+        LocalDirectory localDir = new LocalDirectory(Paths.get("pictures_HQ"));
+
+        List<LocalImage> expected = Files.list(Paths.get("pictures_HQ"))
+                .filter(Files::isRegularFile)
+                .filter(p -> p.toString().endsWith(".jpg"))
+                .map(LocalImage::of)
+                .flatMap(Utils::streamOfOptional)
+                .collect(toList());
+
+        assertEquals(expected, localDir.getImages());
     }
 
 
@@ -106,6 +124,11 @@ public class DirectoryTests {
         @Override
         public Path getPath() {
             return Paths.get(name);
+        }
+
+        @Override
+        public String getId() {
+            return name;
         }
     }
 }
