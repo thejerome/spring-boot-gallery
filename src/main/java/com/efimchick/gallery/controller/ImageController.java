@@ -2,15 +2,22 @@ package com.efimchick.gallery.controller;
 
 import com.efimchick.gallery.Image;
 import com.efimchick.gallery.LocalDirectory;
+import com.efimchick.gallery.LocalImage;
+import com.efimchick.gallery.Utils;
 import com.efimchick.gallery.halresource.ImageResource;
 import org.springframework.hateoas.ExposesResourceFor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Optional;
 
+import static com.efimchick.gallery.Utils.decodeString;
 import static com.efimchick.gallery.halresource.assembler.ResourceAssemblers.imageResourceAssemblerEnrichingSelfLink;
 
 /**
@@ -18,20 +25,24 @@ import static com.efimchick.gallery.halresource.assembler.ResourceAssemblers.ima
  */
 
 @RestController
-@RequestMapping("/img")
+@RequestMapping("/images")
 @ExposesResourceFor(ImageResource.class)
 public class ImageController {
 
-    @GetMapping("/{id}")
-    @ResponseBody
-    ImageResource hello(Long id) {
+    @GetMapping("/{id:.+}")
+    ResponseEntity<ImageResource> image(@PathVariable("id") String id) {
 
-        LocalDirectory dir = new LocalDirectory(Paths.get("pictures_HQ"));
-        Image image = dir.getImages().iterator().next();
-
-        ImageResource imageResource = imageResourceAssemblerEnrichingSelfLink().toResource(image);
+        Path path = Paths.get(decodeString(id));
+        Optional<LocalImage> imageOpt = LocalImage.of(path);
 
 
-        return imageResource;
+        if (imageOpt.isPresent()) {
+            ImageResource res = imageResourceAssemblerEnrichingSelfLink().toResource(imageOpt.get());
+            return ResponseEntity.ok(res);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+
+
     }
 }

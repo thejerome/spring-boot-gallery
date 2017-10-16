@@ -39,16 +39,29 @@ public class DirControllerTest {
 
     @Test
     public void galleryDirsAreUp() throws Exception {
-        mockMvc.perform(get("/dirs/1"))
+        mockMvc.perform(get("/dirs/pictures_HQ"))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void galleryDirsAreUpAndPrinting() throws Exception {
-        mockMvc.perform(get("/dirs/1"))
+    public void galleryDirsAreProperlyFoundById() throws Exception {
+        mockMvc.perform(get("/dirs/pictures_HQ"))
                 .andExpect(status().isOk())
-                .andExpect(content().string("{\"name\":\"pictures_HQ\",\"_links\":{\"self\":{\"href\":\"http://localhost/dirs/pictures_HQ\"}}}"))
+                .andExpect(content().string("{\"name\":\"pictures_HQ\",\"fullName\":\"pictures_HQ\",\"_links\":{\"self\":{\"href\":\"http://localhost/dirs/pictures_HQ\"}}}"))
                 .andReturn();
+
+        mockMvc.perform(get("/dirs/pictures_HQ%5CCarimate"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("{\"name\":\"Carimate\",\"fullName\":\"pictures_HQ\\\\Carimate\",\"_links\":{\"self\":{\"href\":\"http://localhost/dirs/pictures_HQ%5CCarimate\"}}}"))
+                .andReturn();
+    }
+
+    @Test
+    public void noDirLeadsTo404() throws Exception {
+        mockMvc.perform(get("/dirs/nosuchdir"))
+                .andExpect(status().isNotFound())
+                .andReturn();
+
     }
 
 }

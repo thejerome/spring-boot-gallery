@@ -3,13 +3,14 @@ package com.efimchick.gallery.controller;
 import com.efimchick.gallery.LocalDirectory;
 import com.efimchick.gallery.halresource.DirectoryResource;
 import org.springframework.hateoas.ExposesResourceFor;
-import org.springframework.http.HttpEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Optional;
 
+import static com.efimchick.gallery.Utils.decodeString;
 import static com.efimchick.gallery.halresource.assembler.ResourceAssemblers.directoryResourceAssemblerEnrichingSelfLink;
 
 /**
@@ -22,13 +23,17 @@ import static com.efimchick.gallery.halresource.assembler.ResourceAssemblers.dir
 public class DirController {
 
     @GetMapping("/{id}")
-    HttpEntity<DirectoryResource> hello(Long id) {
+    ResponseEntity<DirectoryResource> dir(@PathVariable("id") String id) {
 
-        DirectoryResource res = directoryResourceAssemblerEnrichingSelfLink()
-                .toResource(
-                        new LocalDirectory(Paths.get("pictures_HQ"))
-                );
+        Path path = Paths.get(decodeString(id));
+        Optional<LocalDirectory> dirOpt = LocalDirectory.of(path);
 
-        return new HttpEntity<>(res);
+        if (dirOpt.isPresent()) {
+            DirectoryResource res = directoryResourceAssemblerEnrichingSelfLink()
+                    .toResource(dirOpt.get());
+            return ResponseEntity.ok(res);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
