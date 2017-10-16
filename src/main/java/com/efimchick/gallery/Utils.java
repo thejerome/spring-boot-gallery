@@ -8,8 +8,13 @@ import javax.imageio.stream.FileImageInputStream;
 import javax.imageio.stream.ImageInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -62,4 +67,22 @@ public class Utils {
     public static <T> Stream<T> streamOfOptional(Optional<T> opt) {
         return opt.isPresent() ? Stream.of(opt.get()) : Stream.empty();
     }
+
+    public static String encodeString(String s) {
+        try {
+            return URLEncoder.encode(s, StandardCharsets.UTF_8.toString());
+        } catch (UnsupportedEncodingException e) {
+            return s;
+        }
+    }
+
+    public static String decodeString(String s) {
+        try {
+            return URLDecoder.decode(s, StandardCharsets.UTF_8.toString());
+        } catch (UnsupportedEncodingException e) {
+            return s;
+        }
+    }
+
+
 }
