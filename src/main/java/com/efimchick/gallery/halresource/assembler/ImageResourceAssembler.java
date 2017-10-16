@@ -1,11 +1,11 @@
 package com.efimchick.gallery.halresource.assembler;
 
 import com.efimchick.gallery.Image;
-import com.efimchick.gallery.controller.ImageController;
+import com.efimchick.gallery.Utils;
 import com.efimchick.gallery.halresource.ImageResource;
 import com.efimchick.gallery.halresource.links.LinksEnricher;
-import org.springframework.hateoas.Link;
 
+import static com.efimchick.gallery.Utils.*;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
 /**
@@ -22,11 +22,14 @@ public class ImageResourceAssembler extends AbstractEnrichingResourceAssembler<I
         ImageResource imageResource = new ImageResource();
 
         imageResource.name = image.getName();
+        imageResource.fullName = image.getFullName();
         imageResource.size = image.getSize();
         imageResource.height = image.getHeight();
         imageResource.width = image.getWidth();
 
         imageResource.id = image.getId();
+
+        System.out.println("imageResource.id = " + imageResource.id);
 
         return imageResource;
     }
