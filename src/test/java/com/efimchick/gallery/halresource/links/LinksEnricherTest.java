@@ -50,7 +50,7 @@ public class LinksEnricherTest {
         imageResource.id = "id";
 
         linksEnricher.enrich(imageResource);
-        assertEquals("http://localhost/img/id", imageResource.getLink("self").getHref());
+        assertEquals("http://localhost/images/id", imageResource.getLink("self").getHref());
     }
 
     @Test
@@ -63,7 +63,7 @@ public class LinksEnricherTest {
         ImageResource imageResource = new ImageResourceAssembler().toResource(new LocalImage(Paths.get("pictures_HQ/IMAG0686.jpg")));
 
         linksEnricher.enrich(imageResource);
-        assertEquals("http://localhost/img/pictures_HQ%5CIMAG0686.jpg", imageResource.getLink("self").getHref());
+        assertEquals("http://localhost/images/pictures_HQ%5CIMAG0686.jpg", imageResource.getLink("self").getHref());
     }
 
 
