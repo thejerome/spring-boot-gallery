@@ -10,6 +10,7 @@ public class ImageResource extends ResourceSupport{
     public String id;
 
     public String name;
+    public String fullName;
     public long size;
     public int width;
     public int height;

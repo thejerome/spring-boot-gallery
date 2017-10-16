@@ -7,6 +7,7 @@ import org.springframework.hateoas.ResourceSupport;
  */
 public class DirectoryResource extends ResourceSupport {
     public String name;
+    public String fullName;
     public String id;
 
 }
