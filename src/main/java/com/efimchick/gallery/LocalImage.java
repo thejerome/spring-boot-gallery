@@ -31,7 +31,7 @@ public class LocalImage implements Image {
         this.path = path;
 
         name = path.getFileName().toString();
-        fullName = path.getFileName().toString();
+        fullName = path.toString();
         size = Files.size(path);
         id = path.toString();
         extension = com.google.common.io.Files.getFileExtension(name);
@@ -44,8 +44,8 @@ public class LocalImage implements Image {
     public static Optional<LocalImage> of(Path p) {
         try {
             return Optional.of(new LocalImage(p));
-        } catch (IOException e) {
-            log.error(e.getMessage(), e);
+        } catch (Exception e) {
+            log.error("No image found: " + e.getLocalizedMessage());
             return Optional.empty();
         }
     }

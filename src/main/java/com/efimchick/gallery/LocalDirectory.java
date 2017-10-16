@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
@@ -27,10 +28,14 @@ public class LocalDirectory implements Directory {
     private final String id;
 
     public LocalDirectory(Path path) {
+        if (!Files.exists(path)) {
+            throw new IllegalArgumentException("No such directory");
+        }
+
         this.path = path;
 
         name = path.getFileName().toString();
-        fullName = name;
+        fullName = path.toString();
         id = path.toString();
     }
 
@@ -62,4 +67,11 @@ public class LocalDirectory implements Directory {
         }
     }
 
+    public static Optional<LocalDirectory> of(Path path) {
+        try {
+            return Optional.of(new LocalDirectory(path));
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
 }

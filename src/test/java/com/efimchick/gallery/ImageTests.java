@@ -64,7 +64,7 @@ public class ImageTests {
 
 
         assertEquals("jpg", image.getExtension());
-        assertEquals("IMAG0674.jpg", image.getFullName());
+        assertEquals("pictures_HQ\\Carimate\\IMAG0674.jpg", image.getFullName());
         assertEquals("IMAG0674.jpg", image.getName());
         assertEquals(Paths.get("pictures_HQ\\Carimate\\IMAG0674.jpg"), image.getPath());
         assertEquals(2368, image.getHeight());

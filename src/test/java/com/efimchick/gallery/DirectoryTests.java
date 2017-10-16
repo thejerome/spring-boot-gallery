@@ -58,7 +58,7 @@ public class DirectoryTests {
         assertNotNull(localDir.getImages());
         assertNotNull(localDir.getSubDirs());
 
-        assertEquals("Carimate", localDir.getFullName());
+        assertEquals("pictures_HQ\\Carimate", localDir.getFullName());
         assertEquals("Carimate", localDir.getName());
         assertEquals(Paths.get("pictures_HQ", "Carimate"), localDir.getPath());
         assertEquals(Collections.emptyList(), localDir.getSubDirs());
