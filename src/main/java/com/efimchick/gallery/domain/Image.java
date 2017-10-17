@@ -1,4 +1,4 @@
-package com.efimchick.gallery;
+package com.efimchick.gallery.domain;
 
 /**
  * Created by Evgenii_Efimchik on 09-Oct-17.

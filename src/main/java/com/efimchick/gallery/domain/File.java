@@ -1,4 +1,4 @@
-package com.efimchick.gallery;
+package com.efimchick.gallery.domain;
 
 import org.springframework.hateoas.Identifiable;
 

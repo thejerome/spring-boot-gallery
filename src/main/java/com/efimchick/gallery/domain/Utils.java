@@ -1,6 +1,6 @@
-package com.efimchick.gallery;
+package com.efimchick.gallery.domain;
 
-import com.efimchick.gallery.Image.Dimension;
+import com.efimchick.gallery.domain.Image.Dimension;
 
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
@@ -82,6 +82,8 @@ public class Utils {
             return s;
         }
     }
+
+
 
 
 }
