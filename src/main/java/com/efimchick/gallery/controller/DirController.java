@@ -35,8 +35,8 @@ public class DirController {
     }
 
 
-    @GetMapping("")
-    ResponseEntity<DirectoryResource> root(@PathVariable("id") String id) {
+    @GetMapping
+    ResponseEntity<DirectoryResource> root() {
 
         return directoryService.getRoot()
                 .map(ResponseEntity::ok)

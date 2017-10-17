@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
@@ -22,7 +23,18 @@ public class DirectoryService {
 
     @Value("${root}")
     private String root;
+    private LocalDirectory rootDirectory;
     private final DirectoryResourceAssembler directoryResourceAssemblerWithSelfLinkAndEmbeddedImages;
+
+    @PostConstruct
+    public void checkRoot() {
+        Optional<LocalDirectory> rootDirOpt = LocalDirectory.of(Paths.get(root));
+        if (rootDirOpt.isPresent()){
+            rootDirectory = rootDirOpt.get();
+        } else {
+            throw new IllegalStateException("Invalid root is set: " + root);
+        }
+    }
 
     @Autowired
     public DirectoryService(DirectoryResourceAssembler directoryResourceAssemblerWithSelfLinkAndEmbeddedImages
@@ -36,6 +48,6 @@ public class DirectoryService {
     }
 
     public Optional<DirectoryResource> getRoot() {
-        return Optional.empty();
+        return Optional.ofNullable(directoryResourceAssemblerWithSelfLinkAndEmbeddedImages.toResource(rootDirectory));
     }
 }

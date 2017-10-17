@@ -70,4 +70,13 @@ public class DirControllerTest {
 
     }
 
+    @Test
+    public void rootCallPointsToRootDir() throws Exception {
+        mockMvc.perform(get("/dirs"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("{\"name\":\"pictures_HQ\",\"fullName\":\"pictures_HQ\",\"_embedded\":{\"images\":[{\"name\":\"IMAG0686.jpg\",\"fullName\":\"pictures_HQ\\\\IMAG0686.jpg\",\"size\":3175908,\"width\":4224,\"height\":2368,\"_links\":{\"self\":{\"href\":\"http://localhost/images/pictures_HQ%5CIMAG0686.jpg\"}}},{\"name\":\"IMAG0911.jpg\",\"fullName\":\"pictures_HQ\\\\IMAG0911.jpg\",\"size\":2164700,\"width\":4224,\"height\":2368,\"_links\":{\"self\":{\"href\":\"http://localhost/images/pictures_HQ%5CIMAG0911.jpg\"}}}]},\"_links\":{\"self\":{\"href\":\"http://localhost/dirs/pictures_HQ\"}}}"))
+                .andReturn();
+
+    }
+
 }
