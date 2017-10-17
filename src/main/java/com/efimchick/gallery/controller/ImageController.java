@@ -1,18 +1,14 @@
 package com.efimchick.gallery.controller;
 
-import com.efimchick.gallery.Image;
-import com.efimchick.gallery.LocalDirectory;
 import com.efimchick.gallery.LocalImage;
-import com.efimchick.gallery.Utils;
 import com.efimchick.gallery.halresource.ImageResource;
 import org.springframework.hateoas.ExposesResourceFor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;

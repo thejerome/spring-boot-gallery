@@ -1,20 +1,15 @@
 package com.efimchick;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 import static java.nio.file.Files.*;
-import static java.nio.file.Files.list;
 import static java.util.Collections.emptyList;
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toList;
 
 /**
  * Created by Jerome on 14.05.2016.
@@ -28,7 +23,7 @@ public class ImageDirectory {
 
     public ImageDirectory(Path root) {
         Objects.requireNonNull(root);
-        if (!(exists(root) && isDirectory(root))){
+        if (!(exists(root) && isDirectory(root))) {
             throw new IllegalArgumentException(root + " is not exist or not a directory");
         }
         this.root = root;
@@ -40,10 +35,10 @@ public class ImageDirectory {
         this.imageFilter = imageFilter;
     }
 
-    public List<String> getImages(){
+    public List<String> getImages() {
         try {
             return list(root).filter(p -> imageFilter.isImage(p))
-                    .map(p -> p.toString())
+                    .map(Path::toString)
                     .map(p -> p.replaceAll("\\\\", "/"))
                     .collect(toList());
         } catch (IOException e) {
@@ -52,7 +47,7 @@ public class ImageDirectory {
         return emptyList();
     }
 
-    public List<ImageDirectoryDesc> getDirectories(){
+    public List<ImageDirectoryDesc> getDirectories() {
         try {
             return list(root).filter(p -> isDirectory(p))
                     .map(p -> new ImageDirectory(p, imageFilter).getDesc())
@@ -63,12 +58,9 @@ public class ImageDirectory {
         return emptyList();
     }
 
-    public ImageDirectoryDesc getDesc(){
+    public ImageDirectoryDesc getDesc() {
         return new ImageDirectoryDesc(root.getFileName().toString(), getImages(), getDirectories());
     }
-
-
-
 
 
 }

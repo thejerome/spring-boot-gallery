@@ -1,18 +1,14 @@
 package com.efimchick;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Objects;
-import java.util.function.Predicate;
 
-import static com.efimchick.SpringBootGalleryApplication.*;
+import static com.efimchick.SpringBootGalleryApplication.ResourceNotFoundException;
 
 /**
  * Created by Jerome on 15.05.2016.
