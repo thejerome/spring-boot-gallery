@@ -1,0 +1,3 @@
+root: pictures_HQ
+server:
+  contextPath: /gallery
