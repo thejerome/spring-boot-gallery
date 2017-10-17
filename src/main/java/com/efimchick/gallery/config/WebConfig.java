@@ -1,4 +1,4 @@
-package com.efimchick.gallery.webconfig;
+package com.efimchick.gallery.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
