@@ -4,6 +4,7 @@ import com.efimchick.gallery.domain.LocalDirectory;
 import com.efimchick.gallery.halresource.DirectoryResource;
 import com.efimchick.gallery.halresource.assembler.DirectoryResourceAssembler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.nio.file.Path;
@@ -11,6 +12,7 @@ import java.nio.file.Paths;
 import java.util.Optional;
 
 import static com.efimchick.gallery.domain.Utils.decodeString;
+
 /**
  * Created by Evgenii_Efimchik on 17-Oct-17.
  */
@@ -18,15 +20,13 @@ import static com.efimchick.gallery.domain.Utils.decodeString;
 @Service
 public class DirectoryService {
 
-    private final String root;
+    @Value("${root}")
+    private String root;
     private final DirectoryResourceAssembler directoryResourceAssemblerWithSelfLinkAndEmbeddedImages;
 
     @Autowired
-    public DirectoryService(
-            String root,
-            DirectoryResourceAssembler directoryResourceAssemblerWithSelfLinkAndEmbeddedImages
+    public DirectoryService(DirectoryResourceAssembler directoryResourceAssemblerWithSelfLinkAndEmbeddedImages
     ) {
-        this.root = root;
         this.directoryResourceAssemblerWithSelfLinkAndEmbeddedImages = directoryResourceAssemblerWithSelfLinkAndEmbeddedImages;
     }
 
