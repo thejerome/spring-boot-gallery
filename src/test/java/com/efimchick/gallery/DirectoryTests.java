@@ -1,5 +1,6 @@
 package com.efimchick.gallery;
 
+import com.efimchick.gallery.domain.*;
 import org.junit.Test;
 
 import java.io.IOException;

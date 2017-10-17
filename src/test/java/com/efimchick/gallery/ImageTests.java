@@ -1,5 +1,7 @@
 package com.efimchick.gallery;
 
+import com.efimchick.gallery.domain.Image;
+import com.efimchick.gallery.domain.LocalImage;
 import org.junit.Test;
 
 import java.io.IOException;

@@ -1,10 +1,11 @@
 package com.efimchick.gallery.halresource.assembler;
 
-import com.efimchick.gallery.Image;
-import com.efimchick.gallery.LocalImage;
+import com.efimchick.gallery.domain.Image;
+import com.efimchick.gallery.domain.LocalImage;
 import com.efimchick.gallery.halresource.ImageResource;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.hateoas.ResourceSupport;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -12,7 +13,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.io.IOException;
 import java.nio.file.Paths;
 
-import static com.efimchick.gallery.halresource.assembler.ResourceAssemblers.imageSelfLinkEnricher;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -23,6 +23,9 @@ import static org.junit.Assert.assertNotNull;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class ResourceEnricherTest {
+
+    @Autowired
+    ResourceEnricher<Image, ImageResource> imageSelfLinkEnricher;
 
     @Test
     public void linkEnricherMayBeCreated() {
