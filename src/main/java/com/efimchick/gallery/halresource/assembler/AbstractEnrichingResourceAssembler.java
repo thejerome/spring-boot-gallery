@@ -1,8 +1,5 @@
 package com.efimchick.gallery.halresource.assembler;
 
-import com.efimchick.gallery.Image;
-import com.efimchick.gallery.halresource.ImageResource;
-import com.efimchick.gallery.halresource.links.LinksEnricher;
 import com.google.common.collect.ImmutableList;
 import org.springframework.hateoas.ResourceSupport;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
@@ -14,9 +11,9 @@ import java.util.List;
  */
 public abstract class AbstractEnrichingResourceAssembler<T, R extends ResourceSupport> extends ResourceAssemblerSupport<T, R> {
 
-    private final List<LinksEnricher<R>> enrichers;
+    private final List<ResourceEnricher<T, R>> enrichers;
 
-    public AbstractEnrichingResourceAssembler(Class<?> controllerClass, Class<R> resourceType, LinksEnricher<R>... enrichers) {
+    public AbstractEnrichingResourceAssembler(Class<?> controllerClass, Class<R> resourceType, ResourceEnricher<T, R>... enrichers) {
         super(controllerClass, resourceType);
         this.enrichers = ImmutableList.copyOf(enrichers);
     }
@@ -25,7 +22,7 @@ public abstract class AbstractEnrichingResourceAssembler<T, R extends ResourceSu
     @Override
     public R toResource(T entity) {
         R resource = createResource(entity);
-        enrichers.forEach(e -> e.enrich(resource));
+        enrichers.forEach(e -> e.enrich(entity, resource));
 
         return resource;
     }

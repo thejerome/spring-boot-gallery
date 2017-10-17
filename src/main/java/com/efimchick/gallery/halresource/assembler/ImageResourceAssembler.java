@@ -1,19 +1,14 @@
 package com.efimchick.gallery.halresource.assembler;
 
 import com.efimchick.gallery.Image;
-import com.efimchick.gallery.Utils;
 import com.efimchick.gallery.halresource.ImageResource;
-import com.efimchick.gallery.halresource.links.LinksEnricher;
-
-import static com.efimchick.gallery.Utils.*;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
 /**
  * Created by Evgenii_Efimchik on 11-Oct-17.
  */
 public class ImageResourceAssembler extends AbstractEnrichingResourceAssembler<Image, ImageResource> {
 
-    public ImageResourceAssembler(LinksEnricher<ImageResource>... enrichers) {
+    public ImageResourceAssembler(ResourceEnricher<Image, ImageResource>... enrichers) {
         super(Image.class, ImageResource.class, enrichers);
     }
 
@@ -28,8 +23,6 @@ public class ImageResourceAssembler extends AbstractEnrichingResourceAssembler<I
         imageResource.width = image.getWidth();
 
         imageResource.id = image.getId();
-
-        System.out.println("imageResource.id = " + imageResource.id);
 
         return imageResource;
     }

@@ -2,14 +2,13 @@ package com.efimchick.gallery.halresource.assembler;
 
 import com.efimchick.gallery.Directory;
 import com.efimchick.gallery.halresource.DirectoryResource;
-import com.efimchick.gallery.halresource.links.LinksEnricher;
 
 /**
  * Created by Evgenii_Efimchik on 11-Oct-17.
  */
 public class DirectoryResourceAssembler extends AbstractEnrichingResourceAssembler<Directory, DirectoryResource> {
 
-    public DirectoryResourceAssembler(LinksEnricher<DirectoryResource>... enrichers) {
+    public DirectoryResourceAssembler(ResourceEnricher<Directory, DirectoryResource>... enrichers) {
         super(Directory.class, DirectoryResource.class, enrichers);
     }
 
