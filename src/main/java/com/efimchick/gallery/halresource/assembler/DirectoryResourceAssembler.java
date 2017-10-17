@@ -1,6 +1,6 @@
 package com.efimchick.gallery.halresource.assembler;
 
-import com.efimchick.gallery.Directory;
+import com.efimchick.gallery.domain.Directory;
 import com.efimchick.gallery.halresource.DirectoryResource;
 
 /**
