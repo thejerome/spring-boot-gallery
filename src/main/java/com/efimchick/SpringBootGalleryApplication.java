@@ -3,7 +3,6 @@ package com.efimchick;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,10 +24,6 @@ public class SpringBootGalleryApplication {
         return "Hello!";
     }
 
-    @Bean
-    public String root(){
-        return "root";
-    }
 //
 //    @RequestMapping("/hierarchy")
 //    ImageDirectoryDesc hierarchy() {
