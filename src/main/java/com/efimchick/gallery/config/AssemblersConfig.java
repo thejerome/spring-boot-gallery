@@ -1,5 +1,6 @@
 package com.efimchick.gallery.config;
 
+import com.efimchick.gallery.controller.DataController;
 import com.efimchick.gallery.controller.DirController;
 import com.efimchick.gallery.controller.ImageController;
 import com.efimchick.gallery.domain.Directory;
@@ -35,6 +36,13 @@ public class AssemblersConfig {
     }
 
     @Bean
+    public ResourceEnricher<Image, ImageResource> imageDataLinkEnricher() {
+        return (image, resource) -> resource.add(
+                linkTo(DataController.class).slash(resource.id).withRel("data")
+        );
+    }
+
+    @Bean
     public ResourceEnricher<Directory, DirectoryResource> directorySelfLinkEnricher() {
         return (dir, resource) -> resource.add(
                 linkTo(DirController.class).slash(resource.id).withSelfRel()
@@ -56,9 +64,9 @@ public class AssemblersConfig {
     @Bean
     @Scope("prototype")
     public ImageResourceAssembler imageResourceAssemblerEnrichingSelfLink(
-            ResourceEnricher<Image, ImageResource> imageSelfLinkEnricher
-    ) {
-        return new ImageResourceAssembler(imageSelfLinkEnricher);
+            ResourceEnricher<Image, ImageResource> imageSelfLinkEnricher,
+            ResourceEnricher<Image, ImageResource> imageDataLinkEnricher) {
+        return new ImageResourceAssembler(imageSelfLinkEnricher, imageDataLinkEnricher);
     }
 
     @Bean
