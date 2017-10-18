@@ -12,6 +12,11 @@ import com.efimchick.gallery.halresource.assembler.ResourceEnricher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
+import org.springframework.hateoas.Resources;
+import org.springframework.hateoas.core.EmbeddedWrapper;
+
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static com.efimchick.gallery.halresource.assembler.Utils.wrapResources;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
@@ -22,7 +27,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 @Configuration
 public class AssemblersConfig {
 
-    @Bean()
+    @Bean
     public ResourceEnricher<Image, ImageResource> imageSelfLinkEnricher() {
         return (image, resource) -> resource.add(
                 linkTo(ImageController.class).slash(resource.id).withSelfRel()
@@ -38,7 +43,14 @@ public class AssemblersConfig {
 
     @Bean
     public ResourceEnricher<Directory, DirectoryResource> embeddedImageResourcesEnricher(ImageResourceAssembler imageResourceAssembler) {
-        return (directory, resource) -> resource.embedded = wrapResources(imageResourceAssembler.toResources(directory.getImages()));
+        return (EmbeddedCollectionDirectoryResourceEnricher) (directory, resource) ->
+                wrapResources(imageResourceAssembler.toResources(directory.getImages()));
+    }
+
+    @Bean
+    public ResourceEnricher<Directory, DirectoryResource> embeddedSubDirsResourcesEnricher(DirectoryResourceAssembler directoryResourceAssemblerEnrichingSelfLink) {
+        return (EmbeddedCollectionDirectoryResourceEnricher) (directory, resource) ->
+                wrapResources(directoryResourceAssemblerEnrichingSelfLink.toResources(directory.getSubDirs()));
     }
 
     @Bean
@@ -61,11 +73,31 @@ public class AssemblersConfig {
     @Scope("prototype")
     public DirectoryResourceAssembler directoryResourceAssemblerWithSelfLinkAndEmbeddedImages(
             ResourceEnricher<Directory, DirectoryResource> directorySelfLinkEnricher,
-            ResourceEnricher<Directory, DirectoryResource> embeddedImageResourcesEnricher
-    ) {
+            ResourceEnricher<Directory, DirectoryResource> embeddedImageResourcesEnricher,
+            ResourceEnricher<Directory, DirectoryResource> embeddedSubDirsResourcesEnricher) {
         return new DirectoryResourceAssembler(
                 directorySelfLinkEnricher,
-                embeddedImageResourcesEnricher
+                embeddedImageResourcesEnricher,
+                embeddedSubDirsResourcesEnricher
         );
+    }
+
+    private interface EmbeddedCollectionDirectoryResourceEnricher extends ResourceEnricher<Directory, DirectoryResource> {
+
+        @Override
+        default void enrich(Directory entity, DirectoryResource resource) {
+            if (resource.embedded == null) {
+                resource.embedded = getResources(entity, resource);
+            } else {
+                resource.embedded = new Resources<>(
+                        Stream.concat(
+                                resource.embedded.getContent().stream(),
+                                getResources(entity, resource).getContent().stream()
+                        ).collect(Collectors.toList())
+                );
+            }
+        }
+
+        Resources<EmbeddedWrapper> getResources(Directory entity, DirectoryResource resource);
     }
 }
