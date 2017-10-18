@@ -37,12 +37,12 @@ public class ImageControllerTest {
     public void galleryImageIdFound() throws Exception {
         mockMvc.perform(get("/images/pictures_HQ%5CIMAG0686.jpg"))
                 .andExpect(status().isOk())
-                .andExpect(content().string("{\"name\":\"IMAG0686.jpg\",\"fullName\":\"pictures_HQ\\\\IMAG0686.jpg\",\"size\":3175908,\"width\":4224,\"height\":2368,\"_links\":{\"self\":{\"href\":\"http://localhost/images/pictures_HQ%5CIMAG0686.jpg\"}}}"))
+                .andExpect(content().string("{\"name\":\"IMAG0686.jpg\",\"fullName\":\"pictures_HQ\\\\IMAG0686.jpg\",\"size\":3175908,\"width\":4224,\"height\":2368,\"_links\":{\"self\":{\"href\":\"http://localhost/images/pictures_HQ%5CIMAG0686.jpg\"},\"data\":{\"href\":\"http://localhost/data/pictures_HQ%5CIMAG0686.jpg\"}}}"))
                 .andReturn();
 
         mockMvc.perform(get("/images/pictures_HQ%5CIMAG0911.jpg"))
                 .andExpect(status().isOk())
-                .andExpect(content().string("{\"name\":\"IMAG0911.jpg\",\"fullName\":\"pictures_HQ\\\\IMAG0911.jpg\",\"size\":2164700,\"width\":4224,\"height\":2368,\"_links\":{\"self\":{\"href\":\"http://localhost/images/pictures_HQ%5CIMAG0911.jpg\"}}}"))
+                .andExpect(content().string("{\"name\":\"IMAG0911.jpg\",\"fullName\":\"pictures_HQ\\\\IMAG0911.jpg\",\"size\":2164700,\"width\":4224,\"height\":2368,\"_links\":{\"self\":{\"href\":\"http://localhost/images/pictures_HQ%5CIMAG0911.jpg\"},\"data\":{\"href\":\"http://localhost/data/pictures_HQ%5CIMAG0911.jpg\"}}}"))
                 .andReturn();
     }
 
