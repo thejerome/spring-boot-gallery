@@ -54,7 +54,7 @@ public class ResourceEnricherTest {
         ImageResource imageResource = new ImageResourceAssembler().toResource(new LocalImage(Paths.get("pictures_HQ/IMAG0686.jpg")));
 
         imageSelfLinkEnricher.enrich(imageResource);
-        assertEquals("http://localhost/images/pictures_HQ%5CIMAG0686.jpg", imageResource.getLink("self").getHref());
+        assertEquals("http://localhost/images/pictures_HQ-IMAG0686.jpg", imageResource.getLink("self").getHref());
     }
 
 
