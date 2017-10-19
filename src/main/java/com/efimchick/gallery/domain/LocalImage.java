@@ -8,6 +8,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Optional;
 
+import static com.efimchick.gallery.domain.Utils.escapePath;
+
 /**
  * Created by Evgenii_Efimchik on 10-Oct-17.
  */
@@ -33,7 +35,7 @@ public class LocalImage implements Image {
         name = path.getFileName().toString();
         fullName = path.toString();
         size = Files.size(path);
-        id = path.toString();
+        id = escapePath(path);
         extension = com.google.common.io.Files.getFileExtension(name);
 
         Dimension dimension = Utils.getImageDimension(path.toFile());

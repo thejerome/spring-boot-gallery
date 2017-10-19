@@ -7,10 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Optional;
 
-import static com.efimchick.gallery.domain.Utils.decodeString;
+import static com.efimchick.gallery.domain.Utils.unescapePath;
 
 
 /**
@@ -29,7 +28,7 @@ public class ImageService {
 
     public Optional<ImageResource> findById(String id) {
 
-        Path path = Paths.get(decodeString(id));
+        Path path = unescapePath(id);
         return LocalImage.of(path).map(imageResourceAssemblerEnrichingSelfLink::toResource);
 
     }

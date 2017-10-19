@@ -8,10 +8,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Optional;
 
-import static com.efimchick.gallery.domain.Utils.decodeString;
+import static com.efimchick.gallery.domain.Utils.unescapePath;
 
 
 /**
@@ -23,7 +22,7 @@ public class DataService {
 
     public Optional<InputStreamResource> findImageDataById(String id) {
 
-        Path path = Paths.get(decodeString(id));
+        Path path = unescapePath(id);
         System.out.println(path);
         return LocalImage.of(path)
                 .map(LocalImage::getPath)

@@ -38,7 +38,7 @@ public class DataControllerTest {
 
     @Test
     public void dataControllerMayFindExistingImage() throws Exception {
-        mockMvc.perform(get("/data/pictures_HQ%5CIMAG0686.jpg"))
+        mockMvc.perform(get("/data/pictures_HQ-IMAG0686.jpg"))
                 .andExpect(status().isOk());
     }
 
@@ -50,17 +50,17 @@ public class DataControllerTest {
 
     @Test
     public void dataControllerMayFindExistingImageIgnoringCase() throws Exception {
-        mockMvc.perform(get("/data/pictures_HQ%5CIMAG0686.JPG"))
+        mockMvc.perform(get("/data/pictures_HQ-IMAG0686.JPG"))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void dataControllerFindsProperImage() throws Exception {
-        mockMvc.perform(get("/data/pictures_HQ%5CIMAG0686.jpg"))
+        mockMvc.perform(get("/data/pictures_HQ-IMAG0686.jpg"))
                 .andExpect(status().isOk())
                 .andExpect(content().bytes(Files.readAllBytes(Paths.get("pictures_HQ", "IMAG0686.jpg"))));
 
-        mockMvc.perform(get("/data/pictures_HQ%5CIMAG0911.jpg"))
+        mockMvc.perform(get("/data/pictures_HQ-IMAG0911.jpg"))
                 .andExpect(status().isOk())
                 .andExpect(content().bytes(Files.readAllBytes(Paths.get("pictures_HQ", "IMAG0911.jpg"))));
     }

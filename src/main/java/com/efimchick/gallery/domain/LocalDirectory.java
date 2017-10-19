@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import static com.efimchick.gallery.domain.Utils.escapePath;
 import static java.util.stream.Collectors.toList;
 
 /**
@@ -36,7 +37,7 @@ public class LocalDirectory implements Directory {
 
         name = path.getFileName().toString();
         fullName = path.toString();
-        id = path.toString();
+        id = escapePath(path);
     }
 
     @Override

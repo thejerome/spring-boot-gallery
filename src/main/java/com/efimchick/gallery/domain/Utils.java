@@ -14,6 +14,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -84,6 +85,11 @@ public class Utils {
     }
 
 
+    public static Path unescapePath(String escapedPath) {
+        return Paths.get(escapedPath.replace("-", "/").replace("//", "-"));
+    }
 
-
+    public static String escapePath(Path path) {
+        return path.toString().replace("-", "--").replaceAll("[\\\\/]", "-");
+    }
 }

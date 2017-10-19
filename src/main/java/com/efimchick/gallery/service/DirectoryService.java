@@ -12,7 +12,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
 
-import static com.efimchick.gallery.domain.Utils.decodeString;
+import static com.efimchick.gallery.domain.Utils.unescapePath;
 
 /**
  * Created by Evgenii_Efimchik on 17-Oct-17.
@@ -43,7 +43,7 @@ public class DirectoryService {
     }
 
     public Optional<DirectoryResource> findById(String id) {
-        Path path = Paths.get(decodeString(id));
+        Path path = unescapePath(id);
         return LocalDirectory.of(path).map(directoryResourceAssemblerWithSelfLinkAndEmbeddedImages::toResource);
     }
 
