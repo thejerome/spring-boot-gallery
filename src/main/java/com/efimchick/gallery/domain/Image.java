@@ -13,6 +13,8 @@ public interface Image extends File{
 
     String getExtension();
 
+    String getParentDirId();
+
     class Dimension {
         public final int width;
         public final int height;

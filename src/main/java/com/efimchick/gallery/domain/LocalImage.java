@@ -28,6 +28,7 @@ public class LocalImage implements Image {
     private final int width;
     private final int height;
     private final String fullName;
+    private final String parentDirId;
 
     public LocalImage(Path path) throws IOException {
         this.path = path;
@@ -35,12 +36,14 @@ public class LocalImage implements Image {
         name = path.getFileName().toString();
         fullName = path.toString();
         size = Files.size(path);
-        id = escapePath(path);
+        id = path.getFileName().toString();
         extension = com.google.common.io.Files.getFileExtension(name);
 
         Dimension dimension = Utils.getImageDimension(path.toFile());
         width = dimension.width;
         height = dimension.height;
+
+        parentDirId = escapePath(path.getParent());
     }
 
     public static Optional<LocalImage> of(Path p) {

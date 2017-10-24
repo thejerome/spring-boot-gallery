@@ -17,6 +17,7 @@ public class ImageResource extends ResourceSupport{
     public long size;
     public int width;
     public int height;
+    public String directoryId;
 
 
 }

@@ -44,9 +44,10 @@ public class ResourceEnricherTest {
     public void linkEnricherAddsLinkToSelf() {
         ImageResource imageResource = new ImageResource();
         imageResource.id = "id";
+        imageResource.directoryId = "dir";
 
         imageSelfLinkEnricher.enrich(imageResource);
-        assertEquals("http://localhost/images/id", imageResource.getLink("self").getHref());
+        assertEquals("http://localhost/dirs/dir/id", imageResource.getLink("self").getHref());
     }
 
     @Test
@@ -54,7 +55,7 @@ public class ResourceEnricherTest {
         ImageResource imageResource = new ImageResourceAssembler().toResource(new LocalImage(Paths.get("pictures_HQ/IMAG0686.jpg")));
 
         imageSelfLinkEnricher.enrich(imageResource);
-        assertEquals("http://localhost/images/pictures_HQ-IMAG0686.jpg", imageResource.getLink("self").getHref());
+        assertEquals("http://localhost/dirs/pictures_HQ/IMAG0686.jpg", imageResource.getLink("self").getHref());
     }
 
 

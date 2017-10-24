@@ -28,12 +28,12 @@ public class DataController {
         this.dataService = dataService;
     }
 
-    @GetMapping("/{id:.+}")
-    ResponseEntity<byte[]> image(@PathVariable("id") String id) {
-        return dataService.findImageDataById(id)
+    @GetMapping("{dir}/{img:.+}")
+    ResponseEntity<byte[]> image(@PathVariable("dir") String dir, @PathVariable("img") String img) {
+        return dataService.findImageDataByDirAndId(dir, img)
                 .map(inputStreamResource -> {
                     HttpHeaders headers = new HttpHeaders();
-                    headers.put(HttpHeaders.CONTENT_TYPE, singletonList("image/" + Files.getFileExtension(id).toLowerCase()));
+                    headers.put(HttpHeaders.CONTENT_TYPE, singletonList("image/" + Files.getFileExtension(img).toLowerCase()));
                     return new ResponseEntity(inputStreamResource, headers, HttpStatus.OK);
                 })
                 .orElseGet(() -> ResponseEntity.notFound().build());

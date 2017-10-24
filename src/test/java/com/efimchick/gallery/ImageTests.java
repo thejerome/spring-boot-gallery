@@ -114,6 +114,11 @@ public class ImageTests {
         }
 
         @Override
+        public String getParentDirId() {
+            return "fake";
+        }
+
+        @Override
         public String getId() {
             return name;
         }

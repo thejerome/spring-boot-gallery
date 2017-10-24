@@ -1,8 +1,11 @@
 package com.efimchick.gallery.service;
 
 import com.efimchick.gallery.domain.LocalDirectory;
+import com.efimchick.gallery.domain.LocalImage;
 import com.efimchick.gallery.halresource.DirectoryResource;
+import com.efimchick.gallery.halresource.ImageResource;
 import com.efimchick.gallery.halresource.assembler.DirectoryResourceAssembler;
+import com.efimchick.gallery.halresource.assembler.ImageResourceAssembler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -25,6 +28,8 @@ public class DirectoryService {
     private String root;
     private LocalDirectory rootDirectory;
     private final DirectoryResourceAssembler directoryResourceAssemblerWithSelfLinkAndEmbeddedImages;
+    private final ImageResourceAssembler imageResourceAssemblerEnrichingSelfLink;
+
 
     @PostConstruct
     public void checkRoot() {
@@ -37,17 +42,24 @@ public class DirectoryService {
     }
 
     @Autowired
-    public DirectoryService(DirectoryResourceAssembler directoryResourceAssemblerWithSelfLinkAndEmbeddedImages
-    ) {
+    public DirectoryService(DirectoryResourceAssembler directoryResourceAssemblerWithSelfLinkAndEmbeddedImages,
+                            ImageResourceAssembler imageResourceAssemblerEnrichingSelfLink) {
         this.directoryResourceAssemblerWithSelfLinkAndEmbeddedImages = directoryResourceAssemblerWithSelfLinkAndEmbeddedImages;
+        this.imageResourceAssemblerEnrichingSelfLink = imageResourceAssemblerEnrichingSelfLink;
     }
 
-    public Optional<DirectoryResource> findById(String id) {
-        Path path = unescapePath(id);
+    public Optional<DirectoryResource> findDirectoryById(String dirId) {
+        Path path = unescapePath(dirId);
         return LocalDirectory.of(path).map(directoryResourceAssemblerWithSelfLinkAndEmbeddedImages::toResource);
     }
 
     public Optional<DirectoryResource> getRoot() {
         return Optional.ofNullable(directoryResourceAssemblerWithSelfLinkAndEmbeddedImages.toResource(rootDirectory));
+    }
+
+    public Optional<ImageResource> findImageInDirById(String dirId, String imgId) {
+        Path path = unescapePath(dirId).resolve(imgId);
+        return LocalImage.of(path).map(imageResourceAssemblerEnrichingSelfLink::toResource);
+
     }
 }

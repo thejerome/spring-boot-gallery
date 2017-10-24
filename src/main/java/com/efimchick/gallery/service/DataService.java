@@ -20,10 +20,9 @@ import static com.efimchick.gallery.domain.Utils.unescapePath;
 @Service
 public class DataService {
 
-    public Optional<InputStreamResource> findImageDataById(String id) {
+    public Optional<InputStreamResource> findImageDataByDirAndId(String dir, String id) {
 
-        Path path = unescapePath(id);
-        System.out.println(path);
+        Path path = unescapePath(dir).resolve(id);
         return LocalImage.of(path)
                 .map(LocalImage::getPath)
                 .map(DataService::getFileInputStream)

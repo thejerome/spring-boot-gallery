@@ -23,6 +23,7 @@ public class ImageResourceAssembler extends AbstractEnrichingResourceAssembler<I
         imageResource.width = image.getWidth();
 
         imageResource.id = image.getId();
+        imageResource.directoryId = image.getParentDirId();
 
         return imageResource;
     }
